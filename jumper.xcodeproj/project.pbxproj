@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06C55BA71AB8D757000EA943 /* bokeh.sks in Resources */ = {isa = PBXBuildFile; fileRef = 06C55BA51AB8D757000EA943 /* bokeh.sks */; };
+		06C55BA81AB8D757000EA943 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 06C55BA61AB8D757000EA943 /* bokeh.png */; };
+		06C55BAC1AB8D784000EA943 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 06C55BAA1AB8D784000EA943 /* spark.sks */; };
+		06C55BAD1AB8D784000EA943 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 06C55BAB1AB8D784000EA943 /* spark.png */; };
 		B37E78581AA2BAC2000EA278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37E78571AA2BAC2000EA278 /* AppDelegate.swift */; };
 		B37E785A1AA2BAC2000EA278 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B37E78591AA2BAC2000EA278 /* GameScene.sks */; };
 		B37E785C1AA2BAC2000EA278 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37E785B1AA2BAC2000EA278 /* GameScene.swift */; };
@@ -29,6 +33,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06C55BA51AB8D757000EA943 /* bokeh.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bokeh.sks; sourceTree = "<group>"; };
+		06C55BA61AB8D757000EA943 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
+		06C55BAA1AB8D784000EA943 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
+		06C55BAB1AB8D784000EA943 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		B37E78521AA2BAC2000EA278 /* jumper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jumper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37E78561AA2BAC2000EA278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B37E78571AA2BAC2000EA278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +70,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06C55BA91AB8D776000EA943 /* particles */ = {
+			isa = PBXGroup;
+			children = (
+				06C55BA51AB8D757000EA943 /* bokeh.sks */,
+				06C55BA61AB8D757000EA943 /* bokeh.png */,
+				06C55BAA1AB8D784000EA943 /* spark.sks */,
+				06C55BAB1AB8D784000EA943 /* spark.png */,
+			);
+			name = particles;
+			sourceTree = "<group>";
+		};
 		B37E78491AA2BAC2000EA278 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +102,7 @@
 		B37E78541AA2BAC2000EA278 /* jumper */ = {
 			isa = PBXGroup;
 			children = (
+				06C55BA91AB8D776000EA943 /* particles */,
 				B37E78571AA2BAC2000EA278 /* AppDelegate.swift */,
 				B37E78591AA2BAC2000EA278 /* GameScene.sks */,
 				B37E785B1AA2BAC2000EA278 /* GameScene.swift */,
@@ -201,10 +221,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06C55BAC1AB8D784000EA943 /* spark.sks in Resources */,
 				B37E78661AA2BAC2000EA278 /* LaunchScreen.xib in Resources */,
 				B37E78631AA2BAC2000EA278 /* Images.xcassets in Resources */,
 				B37E785A1AA2BAC2000EA278 /* GameScene.sks in Resources */,
 				B37E78611AA2BAC2000EA278 /* Main.storyboard in Resources */,
+				06C55BAD1AB8D784000EA943 /* spark.png in Resources */,
+				06C55BA71AB8D757000EA943 /* bokeh.sks in Resources */,
+				06C55BA81AB8D757000EA943 /* bokeh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +377,7 @@
 				INFOPLIST_FILE = jumper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -363,6 +388,7 @@
 				INFOPLIST_FILE = jumper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
