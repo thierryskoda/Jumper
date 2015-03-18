@@ -9,7 +9,7 @@
 import SpriteKit
 
 let playerName = "jumpy"
-let backgroundName = "blueSky1"
+let backgroundName = "woodTexture"
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -85,18 +85,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // les contours fond rebondir
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(-self.size.width/2, -self.size.height/2, self.size.width, self.size.height*2))
 
+        self.name = "wall"
         self.physicsBody?.categoryBitMask = PhysicsCategory.Wall
         self.physicsBody?.collisionBitMask = PhysicsCategory.All
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.Player | PhysicsCategory.Bird
         self.physicsWorld.gravity = CGVectorMake(0, -5);
         self.physicsWorld.contactDelegate = self;
     }
     
     func initBackground() {
         
-        background2.position = CGPointMake(0, background.size.height)
-        println("heigh : \(background.size.height)")
         background.position = CGPointMake(0, 0)
+        background.zPosition = -20;
         addChild(background)
+        
+        background2.position = CGPointMake(0, background.size.height - 1)
+        background2.zPosition = -20;
         addChild(background2)
     }
     
@@ -108,7 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody!.angularDamping = 0.3
         player.physicsBody!.restitution = 1.0
         player.physicsBody!.friction = 0.0
-        player.physicsBody!.linearDamping = 0.0
+        player.physicsBody!.linearDamping = 0.3
         player.physicsBody!.dynamic = true
         player.physicsBody!.allowsRotation = true
         player.physicsBody!.affectedByGravity = true
@@ -138,12 +142,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
    
-    var backgroundPos = 0
+    var lastPlayerPosY : CGFloat = 0.0
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
-        background.position.y = -player.position.y
+//        background.position.y += -player.position.y/60
+//        
+//        println("background Y : \(background.position.y)")
+//        background.position.x = player.position.x/10
+//        
+//        if(background.position.y <= (-background.size.height/2 + 300)) {
+//            println("We replace the background")
+//            background.position = CGPointMake(background.position.x, background.position.y + (background.size.height/2))
+//        }
+//
+        var movementSpeed : CGFloat = fabs(lastPlayerPosY) - fabs(player.position.y)
         
+        background.position = CGPointMake(background.position.x, background.position.y - 1)
+        background2.position = CGPointMake(background2.position.x, background2.position.y - 1)
+    
+        
+        if(background.position.y < -background.size.height)
+        {
+            background.position = CGPointMake(background2.position.x, background.position.y + background2.size.height )
+        }
+        
+        if(background2.position.y < -background2.size.height)
+        {
+            background2.position = CGPointMake(background.position.x, background2.position.y + background.size.height)
+            
+        }
+        
+        lastPlayerPosY = player.position.y
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -160,14 +191,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         let firstNode : SKSpriteNode = firstBody.node as SKSpriteNode
-        let secondNode : SKSpriteNode = secondBody.node as SKSpriteNode
+        var secondNode : SKNode = secondBody.node!
         
-        println("Contact between a \(firstNode.name) and \(secondNode.name)")
-        println("Contact between a \(firstBody.categoryBitMask) and \(secondBody.categoryBitMask)")
-        
-        if((firstBody.categoryBitMask == PhysicsCategory.Player && secondBody.categoryBitMask == PhysicsCategory.Line) ||
-        (firstBody.categoryBitMask == PhysicsCategory.Line && secondBody.categoryBitMask == PhysicsCategory.Player)) {
-            playerAndThisLineCollision(secondBody.node as SKSpriteNode)
+        if(secondBody.node?.name == "wall") {
+            if(firstBody.node?.name == birdProperties.birdName) {
+                if(firstNode.position.y <= -self.frame.size.height/3) {
+                    firstNode.removeFromParent()
+                }
+            }
+        } else {
+            
+            secondNode = secondBody.node as SKSpriteNode
+            
+            println("Contact between a \(firstNode.name) and \(secondNode.name)")
+            println("Contact between a \(firstBody.categoryBitMask) and \(secondBody.categoryBitMask)")
+            
+            if((firstBody.categoryBitMask == PhysicsCategory.Player && secondBody.categoryBitMask == PhysicsCategory.Line) ||
+            (firstBody.categoryBitMask == PhysicsCategory.Line && secondBody.categoryBitMask == PhysicsCategory.Player)) {
+                playerAndThisLineCollision(secondBody.node as SKSpriteNode)
+            }
         }
     }
     
@@ -235,7 +277,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sparkEmmiter.runAction(SKAction.sequence([SKAction.waitForDuration(1),SKAction.removeFromParent()]))
         
         // Apply the jump of the line
-        player.physicsBody?.applyImpulse(CGVectorMake(0, 20))
+        player.physicsBody?.applyImpulse(CGVectorMake(0, 35))
         
         // Remove the line
         line.removeFromParent()
